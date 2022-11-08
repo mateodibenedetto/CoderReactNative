@@ -18,17 +18,17 @@ export const Notes = () => {
   const [textItem, setTextItem] = useState("");
   const [list, setList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [itemSelected, setItemSelected] = useState({});
-  const [checked, setChecked] = useState(false)
+  const [itemSelected, setItemSelected] = useState({});  
 
   const onHandleChange = (t) => setTextItem(t);
 
   const addItem = () => {
-    setList((currentState) => [
+    if(textItem === "" || textItem.length < 3) return
+    setList((currentState) => [ 
       ...currentState,
-      { id: Math.random().toString(), value: textItem },
+      { id: Math.random().toString(), value: textItem, checked: false },
     ]);
-    setTextItem(""); 
+    setTextItem("");  
   };
 
   const selectedItem = (id) => { 
@@ -50,18 +50,20 @@ export const Notes = () => {
 
 
   const checkedItem = (id) => {
-    list.map((item, index) => {
-      if(id === index) {
+    list.map((item) => {
+      if(id === item.id) {
         item.checked = !item.checked
       }
-      return {...item}
     })
-  }
+    
+    console.log(list)
+  };
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.listItems} onPress={() => selectedItem(item.id)}>
       <TouchableOpacity style={styles.checkbox} onPress={() => checkedItem(item.id)}>
-        { checked === true ? <Text>✔️</Text> : <Text></Text>}
+        { item.checked === true ? console.log('tachado') : console.log('no tachado')}
+        {/* { item.checked === true ? <Text>✔️</Text> : <Text></Text>} */}
       </TouchableOpacity>
       <Text style={styles.item}>{item.value}</Text>
     </TouchableOpacity>
@@ -85,8 +87,8 @@ export const Notes = () => {
       <View>
         <FlatList
           data={list}
-          renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          renderItem={ ({ item, index }) => <TaskItem task={ item } index={ index } /> }
         />
       </View>
       <Modal isVisible={modalVisible} actionDeleteItem={deleteItem} actionCancelDeleteItem={cancelDeleteItem} />
