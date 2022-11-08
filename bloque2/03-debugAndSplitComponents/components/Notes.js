@@ -88,7 +88,7 @@ export const Notes = () => {
         <FlatList
           data={list}
           keyExtractor={(item) => item.id}
-          renderItem={ ({ item, index }) => <TaskItem task={ item } index={ index } /> }
+          renderItem={ renderItem }
         />
       </View>
       <Modal isVisible={modalVisible} actionDeleteItem={deleteItem} actionCancelDeleteItem={cancelDeleteItem} />
