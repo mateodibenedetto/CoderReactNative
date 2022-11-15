@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins'
   },
   title: { 
+    paddingTop: 100,
     fontSize: 35, 
     color: '#fff', 
     fontWeight: 45,
