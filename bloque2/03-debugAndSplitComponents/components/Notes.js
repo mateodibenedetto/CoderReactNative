@@ -23,6 +23,7 @@ export const Notes = () => {
   const onHandleChange = (t) => setTextItem(t);
 
   const addItem = () => {
+    console.log('wft');
     if(textItem === "" || textItem.length < 3) return
     setList((currentState) => [ 
       ...currentState,
@@ -61,9 +62,9 @@ export const Notes = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.listItems} onPress={() => selectedItem(item.id)}>
-      <TouchableOpacity style={styles.checkbox} onPress={() => checkedItem(item.id)}>
-        { item.checked === true ? console.log('tachado') : console.log('no tachado')}
-        {/* { item.checked === true ? <Text>✔️</Text> : <Text></Text>} */}
+      <TouchableOpacity style={styles.checkbox} onPress={() => checkedItem(item.id)}> 
+        { list.filter((item) => item.checked === true) }
+        { list.forEach((item) => item.checked === true ? <Text>✔️</Text> : <Text></Text>)}
       </TouchableOpacity>
       <Text style={styles.item}>{item.value}</Text>
     </TouchableOpacity>
